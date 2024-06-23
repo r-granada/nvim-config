@@ -53,3 +53,17 @@ vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
 
+
+-- WSL clipboard
+vim.opt.clipboard = "unnamedplus"
+if vim.fn.has('wsl') == 1 then
+    vim.api.nvim_create_autocmd('TextYankPost', {
+        group = vim.api.nvim_create_augroup('Yank', { clear = true }),
+        callback = function()
+            vim.fn.system('clip.exe', vim.fn.getreg('"'))
+
+        end,
+
+    })
+end
+
